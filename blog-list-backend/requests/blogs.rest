@@ -1,0 +1,26 @@
+GET http://localhost:3001/api/blogs HTTP/1.1
+
+###
+
+POST http://localhost:3001/api/blogs HTTP/1.1
+content-type: application/json
+
+{
+    "author": "author4",
+    "url": "url4",
+    "title": "title4"
+}
+
+###
+
+PUT http://localhost:3001/api/blogs/1 HTTP/1.1
+content-type: application/json
+
+# {
+#     "likes": 10
+# }
+
+###
+
+DELETE http://localhost:3001/api/blogs/3 HTTP/1.1
+content-type: application/json
