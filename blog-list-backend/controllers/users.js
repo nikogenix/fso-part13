@@ -1,19 +1,32 @@
 const router = require("express").Router();
 
-const { User } = require("../models");
+const { User, Blog } = require("../models");
 
 const userFinderByID = async (req, res, next) => {
-	req.user = await User.findByPk(req.params.id);
+	req.user = await User.findByPk(req.params.id, {
+		include: {
+			model: Blog,
+		},
+	});
 	next();
 };
 
 const userFinderByName = async (req, res, next) => {
-	req.user = await User.findOne({ where: { username: req.params.username } });
+	req.user = await User.findOne({
+		where: { username: req.params.username },
+		include: {
+			model: Blog,
+		},
+	});
 	next();
 };
 
 router.get("/", async (req, res) => {
-	const users = await User.findAll();
+	const users = await User.findAll({
+		include: {
+			model: Blog,
+		},
+	});
 	res.json(users);
 });
 
