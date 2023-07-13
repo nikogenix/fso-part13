@@ -1,0 +1,25 @@
+GET http://localhost:3001/api/users/1 HTTP/1.1
+
+###
+
+POST http://localhost:3001/api/users HTTP/1.1
+content-type: application/json
+
+{
+    "username": "oops@hey.dev",
+    "name": "name4"
+}
+
+###
+
+PUT http://localhost:3001/api/users/user2 HTTP/1.1
+content-type: application/json
+
+{
+    "username": "hello@me.com"
+}
+
+###
+
+DELETE http://localhost:3001/api/users/1 HTTP/1.1
+content-type: application/json
