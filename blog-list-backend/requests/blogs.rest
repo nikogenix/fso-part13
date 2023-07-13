@@ -13,7 +13,7 @@ content-type: application/json
 
 ###
 
-PUT http://localhost:3001/api/blogs/1 HTTP/1.1
+PUT http://localhost:3001/api/blogs/8 HTTP/1.1
 content-type: application/json
 
 {
