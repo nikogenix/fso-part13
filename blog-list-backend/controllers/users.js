@@ -3,6 +3,14 @@ const router = require("express").Router();
 const { User, Blog, ReadingList } = require("../models");
 
 const userFinderByID = async (req, res, next) => {
+	let where = {};
+
+	if (req.query.read) {
+		where = {
+			read: req.query.read,
+		};
+	}
+
 	req.user = await User.findByPk(req.params.id, {
 		include: [
 			{
@@ -16,6 +24,7 @@ const userFinderByID = async (req, res, next) => {
 				through: {
 					attributes: ["read", "id"],
 					as: "info",
+					where,
 				},
 				as: "reading_list",
 			},
