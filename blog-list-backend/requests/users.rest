@@ -12,6 +12,16 @@ content-type: application/json
 
 ###
 
+POST http://localhost:3003/api/readinglists HTTP/1.1
+content-type: application/json
+
+{
+    "blogId": 1,
+    "userId": 2
+}
+
+###
+
 PUT http://localhost:3001/api/users/user2 HTTP/1.1
 content-type: application/json
 

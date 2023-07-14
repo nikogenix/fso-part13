@@ -9,6 +9,7 @@ const blogFinder = async (req, res, next) => {
 	req.blog = await Blog.findByPk(req.params.id, {
 		include: {
 			model: User,
+			as: "added_by",
 		},
 	});
 	next();
@@ -29,6 +30,7 @@ router.get("/", async (req, res) => {
 	const blogs = await Blog.findAll({
 		include: {
 			model: User,
+			as: "added_by",
 		},
 		where,
 		order: [["likes", "DESC"]],
