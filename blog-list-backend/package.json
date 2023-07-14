@@ -6,6 +6,7 @@
 	"scripts": {
 		"start": "node index.js",
 		"dev": "nodemon index.js",
+		"migration:down": "node util/rollback.js",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"author": "",
@@ -18,6 +19,7 @@
 		"jsonwebtoken": "^9.0.1",
 		"nodemon": "^3.0.1",
 		"pg": "^8.11.1",
-		"sequelize": "^6.32.1"
+		"sequelize": "^6.32.1",
+		"umzug": "^3.2.1"
 	}
 }

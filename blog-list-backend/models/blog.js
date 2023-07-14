@@ -30,11 +30,9 @@ Blog.init(
 	{
 		sequelize,
 		underscored: true,
-		timestamps: false,
+		timestamps: true,
 		modelName: "blogs",
 	}
 );
-
-Blog.sync();
 
 module.exports = Blog;
