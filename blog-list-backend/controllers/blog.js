@@ -7,15 +7,16 @@ const { tokenExtractor } = require("../util/middleware");
 
 const blogFinder = async (req, res, next) => {
 	req.blog = await Blog.findByPk(req.params.id, {
+		attributes: ["id", "title", "url", "author", "likes", "year"],
 		include: {
 			model: User,
-			as: "added_by",
+			as: "user",
 		},
 	});
 	next();
 };
 
-router.get("/", async (req, res) => {
+router.get("/", tokenExtractor, async (req, res) => {
 	let where = {};
 
 	if (req.query.search) {
@@ -28,9 +29,10 @@ router.get("/", async (req, res) => {
 	}
 
 	const blogs = await Blog.findAll({
+		attributes: ["id", "title", "url", "author", "likes", "year"],
 		include: {
 			model: User,
-			as: "added_by",
+			as: "user",
 		},
 		where,
 		order: [["likes", "DESC"]],
@@ -38,7 +40,7 @@ router.get("/", async (req, res) => {
 	res.json(blogs);
 });
 
-router.get("/:id", blogFinder, async (req, res) => {
+router.get("/:id", tokenExtractor, blogFinder, async (req, res) => {
 	if (req.blog) {
 		res.json(req.blog);
 	} else {
@@ -52,7 +54,7 @@ router.post("/", tokenExtractor, async (req, res) => {
 	return res.json(blog);
 });
 
-router.put("/:id", blogFinder, async (req, res) => {
+router.put("/:id", blogFinder, tokenExtractor, async (req, res) => {
 	if (req.blog) {
 		req.blog.likes = req.body.likes || ++req.blog.likes;
 		await req.blog.save();
@@ -64,8 +66,8 @@ router.put("/:id", blogFinder, async (req, res) => {
 
 router.delete("/:id", blogFinder, tokenExtractor, async (req, res) => {
 	if (req.blog) {
-		if (req.blog.userId !== req.decodedToken.id) res.status(401).end();
-		await req.blog.destroy();
+		if (req.blog.user.id === req.decodedToken.id) await req.blog.destroy();
+		else res.status(401).end();
 	}
 	res.status(204).end();
 });
